@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crud</title>
+  </head>
+  <body>
+    <form id="myform">
+      <div>
+        <label>Name:</label>
+        <input type="text" id="name" name="name" />
+        <br />
+      </div>
+      <div>
+        <label>EmailId:</label>
+        <input type="text" id="emailId" name="emailId" />
+        <br />
+      </div>
+
+      <button type="submit">Submit</button>
+    </form>
+    <hr />
+    <ul id="list-items"></ul>
+    <script>
+      window.addEventListener("load", () => {
+        const form = document.getElementById("myform");
+        const list = document.getElementById("list-items");
+
+        form.addEventListener("submit", (event) => {
+          event.preventDefault();
+
+          const name = document.getElementById("name").value;
+          const emailId = document.getElementById("emailId").value;
+
+          const listItem = document.createElement("li");
+          listItem.innerHTML = `Name: ${name} EmailId: ${emailId} `;
+          list.appendChild(listItem);
+
+          const editButton = document.createElement("button");
+          editButton.innerText = "edit";
+          listItem.appendChild(editButton);
+
+          const deleteButton = document.createElement("button");
+          deleteButton.innerText = "delete";
+          listItem.appendChild(deleteButton);
+
+          editButton.addEventListener("click", () => {
+            const editForm = document.createElement("form");
+
+            const nameLabel = document.createElement("label");
+            nameLabel.innerText = "Name:";
+            const nameInput = document.createElement("input");
+            nameInput.type = "text";
+            editForm.appendChild(nameLabel);
+            editForm.appendChild(nameInput);
+
+            const emailLabel = document.createElement("label");
+            emailLabel.innerText = "EmailId:";
+            const emailInput = document.createElement("input");
+            emailInput.type = "text";
+            editForm.appendChild(emailLabel);
+            editForm.appendChild(emailInput);
+
+            const saveButton = document.createElement("button");
+            saveButton.textContent = "Save";
+            editForm.appendChild(saveButton);
+
+            listItem.innerHTML = "";
+            listItem.appendChild(editForm);
+
+            saveButton.addEventListener("click", (event) => {
+              event.preventDefault();
+
+              const updatedName = nameInput.value;
+              const updatedEmailId = emailInput.value;
+
+              listItem.innerHTML = `Name: ${updatedName} EmailId: ${updatedEmailId}`;
+              listItem.appendChild(editButton);
+              listItem.appendChild(deleteButton);
+            });
+          });
+
+          deleteButton.addEventListener("click", () => {
+            listItem.remove();
+          });
+
+          form.reset();
+        });
+      });
+    </script>
+  </body>
+</html>
